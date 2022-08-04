@@ -208,11 +208,6 @@ server {
         return 404;
     }
 
-    location = /favicon.ico {
-        log_not_found off;
-        access_log off;
-    }
-
     location = /robots.txt {
         allow all;
         log_not_found off;
