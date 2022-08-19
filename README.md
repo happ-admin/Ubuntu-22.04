@@ -420,3 +420,49 @@ cd happ
 ```
 docker compose up -d
 ```
+
+# Autostart app on reload
+
+```
+sudo nano /etc/systemd/system/happ.service
+```
+
+```
+[Unit]
+Description=Happ Service
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=/home/happ/happ
+ExecStart=/home/happ/.docker/cli-plugins/docker-compose up -d
+ExecStop=/home/happ/.docker/cli-plugins/docker-compose stop
+TimeoutStartSec=0
+
+[Install]
+WantedBy=multi-user.target
+```
+
+```
+sudo systemctl enable happ
+```
+
+```
+sudo systemctl daemon-reload
+```
+
+```
+sudo systemctl restart happ.service
+```
+
+```
+sudo journalctl -u happ.service
+```
+
+# Reload Server
+
+```
+sudo reboot now
+```
